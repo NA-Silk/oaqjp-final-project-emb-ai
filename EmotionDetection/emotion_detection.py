@@ -16,14 +16,9 @@ def emotion_detector(text_to_analyze):
     # Collect emotion scores
     emotion_scores = formatted_response['emotionPredictions'][0]['emotion']
     # Find dominant emotion
-    emotion_scores = {'anger': 0.04844517, 'disgust': 0.03220878, 'fear': 0.094105996, 'joy': 0.5361687, 'sadness': 0.26173046}
 
     d = list(emotion_scores.items()) # Convert to list of tuples
     d.sort(key=lambda x: x[1], reverse=True) # Sort by second element
     emotion_scores['dominant_emotion'] = d[0][0] # Add 'dominant_emotion' to dict
 
     return emotion_scores
-
-#python3
-#from emotion_detection import emotion_detector
-#emotion_detector("I am so hapy doing this.")
