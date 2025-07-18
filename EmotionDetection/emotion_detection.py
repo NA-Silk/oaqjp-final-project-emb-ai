@@ -13,12 +13,24 @@ def emotion_detector(text_to_analyze):
     # Format response
     formatted_response = json.loads(response.text)
 
-    # Collect emotion scores
-    emotion_scores = formatted_response['emotionPredictions'][0]['emotion']
-    # Find dominant emotion
-
-    d = list(emotion_scores.items()) # Convert to list of tuples
-    d.sort(key=lambda x: x[1], reverse=True) # Sort by second element
-    emotion_scores['dominant_emotion'] = d[0][0] # Add 'dominant_emotion' to dict
+    # Error handling
+    if response.status_code == 200: 
+        # Collect emotion scores
+        emotion_scores = formatted_response['emotionPredictions'][0]['emotion']
+        
+        # Find dominant emotion
+        d = list(emotion_scores.items()) # Convert to list of tuples
+        d.sort(key=lambda x: x[1], reverse=True) # Sort by second element
+        emotion_scores['dominant_emotion'] = d[0][0] # Add 'dominant_emotion' to dict
+    
+    elif response.status_code == 400: 
+        emotion_scores = {
+            'anger': None,
+            'disgust': None,
+            'fear': None,
+            'joy': None,
+            'sadness': None,
+            'dominant_emotion': None
+        }
 
     return emotion_scores
